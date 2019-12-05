@@ -1,0 +1,79 @@
+Benjamin John Wainwright
+	
+AttachmentsApr 24, 2019, 9:16 PM (10 hours ago)
+	
+to me
+
+Hi Geoff,
+
+ 
+
+I’ve downloaded the sequences in the link below to my HDD, but if you have time it is probably easier all round if you can down load the files via this link to your computer.
+
+ 
+
+Also attached is the MetaData, you want the one with your name at the end , the other one contains lots of other info that is unlikely useful to you – I used that to make the one for you, it’s attached just in case,  Also attached is the macrogen order sheet incase that is useful (barcodes pool name etc)
+
+ 
+
+When you get a back from off grid have a go at this when you can:
+
+ 
+
+These are the first sequences I’ve received from MacroGen – let me what you think of them quality wise. They are cheaper than GIS here in Singapore so I might switch to them. Also attached is the meta data, and there is quite a bit that we can play with, I expect hope to find some nice patterns here.
+
+ 
+
+Anyway, this dataset (16S) is from the very remote Chagos Archipelago in the Middle of the Indian Ocean ( https://en.wikipedia.org/wiki/Chagos_Archipelago ) and we have samples from numerous Atolls throughout, nearly no one lives here and getting samples from here is pretty novel.  You might know of Diego Garcia – it’s here and was a rendition flight refueling point when all that shady abduction stuff was going on.
+
+ 
+
+The samples are from two species of corals (p. acuta and p. damicornis )
+
+ 
+
+The analysis is going to be pretty standard like we’ve done before, but with more things to analyse.
+
+ 
+
+Things to try:
+
+ 
+
+1, Since we have two species I suspect we have two different fungal communities – can you do an NMDS by species to see if they are different and then do permANOVA to see if its significant?
+
+ 
+
+2, We probably need to parse the dataset into two (might be wrong though) for all the next analyses – NMDS for each species by Island
+
+ 
+
+3, NMDS for each species by Depth range
+
+ 
+
+4 , NMDS for each species by Salinity range
+
+ 
+
+5, NMDS for each species by temp range
+
+ 
+
+6 , NMDS for each species by Colony colour – this one could be good as it relates to coral bleaching and consequently health of the coral
+
+ 
+
+7, NMDS for each species by reef type – this is all about the habitat the sample was collected in.
+
+ 
+
+We’ll probably need some plots of diversity for the islands, if we see any community structuring by depth, temp, colony colour can you do the corresponding diversity plots for each?
+
+ 
+
+That’s it for now, feel free to explore and let me know if you have any questions
+
+ 
+
+Thanks again
