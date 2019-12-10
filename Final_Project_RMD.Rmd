@@ -1,0 +1,45 @@
+---
+title: "Final Project"
+author: "Reagan Dodge"
+date: "12/10/2019"
+output: html_document
+---
+
+**This document is designed to explain the process needed to take genenetic sequences and turn them into workable data that is ready for analysis.**   
+  
+**This process has steps:**  
+
+* **DADA 2 (not the disease)**   
+* **Phyloseq and Phylogentic Tree**   
+* **Alpha Diversity**  
+* **Analysis**  
+
+---------------------
+#### **DADA 2**  
+    
+Our starting point is a set of Illumina-sequenced paired-end fastq files that have been split (or “demultiplexed”) by sample and from which the barcodes/adapters have already been removed. The DADA2 package denoises and removes sequencing errors from this sequence data. The resulting amplicon sequence variant (ASV) table records the number of times each sequence variant was observed in each sample. This provides a census of a community. We then assign taxonomy, and import the information into the phyloseq package for the analysis of microbiome data.  
+
+First, prepared fastq files are checked for quality by visualizing the quality profiles of both the forward and reverse reads.  
+
+```{r pressure, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("quality_profile_fnFs.png")
+knitr::include_graphics("quality_profile_fnRs.png")
+```
+The forward read quality (top) is not great, and the reverse read quality (below) is even worse. Luckily for us, the next step is to filter by the maximum number of “expected errors” allowed in a read with the maxEE parameter. We are truncating at 250 and 160. Below is the included code for reference. 
+```{r, echo=TRUE, eval=FALSE}
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(250,160),
+                     maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
+                     compress=TRUE, multithread=TRUE) 
+
+
+```
+
+Once this step has been completed we need to learn and plot the error rates. Again, forward error rates are on top and reverse error rates on the bottom.The error rates for each possible transition (A→C, A→G, …) are shown. Points are the observed error rates for each consensus quality score. The black line shows the estimated error rates. The red line shows the error rates expected under the nominal definition of the Q-score. Here the estimated error rates (black line) are a good fit to the observed rates (points), and the error rates drop with increased quality as expected. Everything looks reasonable and we proceed. 
+
+```{r, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("error_plot_F.png")
+knitr::include_graphics("error_plot_R.png")
+```
+Our next step is to apply the core sample inference algorithm to the filtered and trimmed sequence data.
+
+
