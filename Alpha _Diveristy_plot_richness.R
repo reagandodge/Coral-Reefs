@@ -37,6 +37,8 @@ p + geom_point(size=5, alpha=0.7)
 
 #CHAGOS PRACTICE ALPHA DIVERSITY 
 
+ps<- readRDS("phyloseq_object_16S.RDS")
+
 ps <- prune_species(speciesSums(ps) > 0, ps)
 
 #plot richness
@@ -44,18 +46,25 @@ ps <- prune_species(speciesSums(ps) > 0, ps)
 plot_richness(ps)
 
 #specify richness 
+jpeg("plot_richness_shannon_simpson.jpeg")
 plot_richness(ps,measures = c("Simpson", "Shannon"))
-
+dev.off()
 # choose some meaninful experimental values 
 sample_variables(ps)
-
+jpeg("plot_richness_site.jpeg")
 plot_richness(ps, x="site", measures=c("Simpson", "Shannon"))
+dev.off()
 
+jpeg("plot_richness_island.jpeg")
 plot_richness(ps, x="Island", measures=c("Simpson", "Shannon"))
+dev.off()
 
+jpeg("plot_richness_depth.jpeg")
 plot_richness(ps, x="depth..m.", measures=c("Simpson", "Shannon"))
+dev.off()
 
+jpeg("plot_richness_temprange.jpeg")
 plot_richness(ps, x="Temp.Range..oC.", measures=c("Simpson", "Shannon"))
-
+dev.off()
 
 

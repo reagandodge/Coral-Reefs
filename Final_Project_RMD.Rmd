@@ -288,30 +288,32 @@ Total                          92   3.05699                  1.00000
 
 The functions in the vegan package contain tools for ordination methods and tools for the analysis of dissimilarities and community diversity. 
 
+
 -------
+
+
 We can also take a look at shannon diversity. Adding new columns to our data based off of this. 
 
 ```{r eval = FALSE, echo = TRUE}
-
 shannon = vegan::diversity(otu_table(ps_ra),index = "shannon")
 sample_data(ps_ra)$Shannon = shannon
 ```
-And now richness with shannon
-```{r eval = FALSE, echo = TRUE}
 
+
+
+And now richness with shannon
+
+
+```{r eval = FALSE, echo = TRUE}
 rich = specnumber(otu_table(ps_ra))
 sample_data(ps_ra)$Richness = rich
 
-
 meta = as.data.frame(sample_data(ps_ra))
-
 
 meta$salinity = as.numeric(meta$salinity)
 
-
 shannonmod = glm(Shannon ~ salinity,data=meta)
 summary(shannonmod)
-
 ```
 
 Now the outcomes of this model 
@@ -434,11 +436,18 @@ knitr::include_graphics("GeneGlomActinobacteria.png")
 
 Both Peros and Salomon islands seems to contain the highest abundance of life among the community structures overall. 
 
-**And now some bar plots **
 
+-------
+
+Taking a different look at abundance by island through a bar plot. 
 ```{r echo=FALSE, out.width = '100%'}
 knitr::include_graphics("bar_plot_bacteroidetes_abundance.png")
 ```
 
+----------
+
+**These initial analyses give us a good insight into what this data looks like. We look forward to working further on this data more so that we can determine how a warming climate impacts corals and how variables affect community structure.**
+
+---------
 
 

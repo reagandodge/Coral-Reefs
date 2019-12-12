@@ -190,7 +190,7 @@ saveRDS(fitJC, "../Chagos_2/WWP_fitJC.RDS") # This is the new tree using optim.p
 write.tree(fitJC$tree, file = "../Chagos_2/WWP_bact_tree_JC.nwk")
 
 # reload point
-fitJC <- readRDS("../Chagos_2/WWP_fitJC.RDS")
+fitJC <- readRDS("../Coral-Reefs/WWP_fitJC.RDS")
 
 (unique(names(seqs)))
 
@@ -213,14 +213,72 @@ ps = phyloseq(otu_table(ps@otu_table),
 #save this as rds
 #load tidyverse and objects in a new script
 
+
+?plot_tree
 tree<-plot_tree(ps)
+png("phylotree.png")
+
+
+
+plot_tree(ps, size = "Abundance")
+
+dev.off()
 
 saveRDS(tree,"../Chagos_2/PHYLO_tree.RDS")
 
 
+plot_bar(ps, fill = "Genus")
+#PHYLO TREE WORK 
+bact<- subset_taxa(ps, Phylum == "Bacteroidetes")
+genglomb<-tax_glom(bact,"Genus")
+plot_tree(genglomb, color="Island", size ="abundance")
+
+
+proteo<- subset_taxa(ps, Phylum == "Proteobacteria")
+genglomp<-tax_glom(proteo,"Genus")
+plot_tree(genglomp, color="Island",  size ="abundance")
+
+
+
+cyano<- subset_taxa(ps, Phylum == "Cyanobacteria")
+genglomc<-tax_glom(cyano,"Genus")
+plot_tree(genglomc, color="Island",  size ="abundance")
+
+
+firm<- subset_taxa(ps, Phylum == "Firmicutes")
+genglomf<-tax_glom(firm,"Genus")
+plot_tree(genglomf, color="Island",  size ="abundance")
+
+
+epsi<- subset_taxa(ps, Phylum == "Epsilonbacteraeota")
+genglome<-tax_glom(epsi,"Genus")
+plot_tree(genglome, color="Island",  size ="abundance")
+
+
+actino<- subset_taxa(ps, Phylum == "Actinobacteria")
+gengloma<-tax_glom(actino,"Genus")
+plot_tree(gengloma, color="Colony.Colour",  size ="abundance")
+
+title = "plot_bar; Bacteroidetes-only"
+plot_bar(bact, "Family", "Abundance", "Family", title=title, facet_grid= "Island")
+
+ps.ord    <- ordinate(ps)
+plot_ordination(ps, ps.ord, color="Island")
+psUF <- UniFrac(ps)
+load("psUF")
+ps.pcoa <- pcoa(psUF)
+
+barplot(ps.pcoa$values$Relative_eig)
+
+
+
+
+
+
+
 
 #### redo with GTR model?
-# fitGTR <- update(fit, k=4, inv=0.2)
+#fitGTR <- update(fit, k=4, inv=0.2)
 # fitGTR <- phangorn::optim.pml(fitGTR, model="GTR", optInv=TRUE, optGamma=TRUE,
 #                               control = phangorn::pml.control(trace = 1L),rearrangement = "stochastic")
 
