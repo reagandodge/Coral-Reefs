@@ -137,8 +137,10 @@ ps_ra@sam_data$Island
 sample_data(ps_ra)$Island
 
 # look at it
+
 plot_bar(ps, fill = "Phylum") + facet_wrap(~Island) + theme(legend.position="bottom")
 
+plot_bar(ps, fill = "Genus" )+ facet_wrap(~site)
 
 # phylotree
 library(phangorn)

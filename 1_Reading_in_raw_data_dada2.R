@@ -15,7 +15,7 @@ BiocManager::install("decontam")
 
 
 # Find raw fastq files and prepare workspace ####
-path <- "../../Chagos_Project/raw_data" 
+path <- "../Chagos_Data/raw_data" 
 list.files(path)
 
 # Parse fwd and rev reads
@@ -44,10 +44,10 @@ out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(250,160),
                      maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
                      compress=TRUE, multithread=TRUE)
 #save this step as an rds object 
-saveRDS(out,"Chagos_Project_filt250_160.RDS")
-out<- readRDS("Chagos_Project_filt250_160.RDS")
+saveRDS(out,"../Coral-Reefs/Chagos_Project_filt250_160.RDS")
+out<- readRDS("../Coral-Reefs/Chagos_Project_filt250_160.RDS")
 
-
+?file
 
 head(out)
 
@@ -81,6 +81,7 @@ mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)
 head(mergers[[1]])
 
 # Construct sequence table ####
+?dim
 seqtab <- makeSequenceTable(mergers)
 dim(seqtab)
 
@@ -92,10 +93,10 @@ seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE
 dim(seqtab.nochim)
 sum(seqtab.nochim)/sum(seqtab)
 # Save progress
-saveRDS(seqtab.nochim,"seqtab.nochim.RDS")
+saveRDS(seqtab.nochim,"../Coral-Reefs/seqtab.nochim.RDS")
 
 # re-load point for sequence table ####
-seqtab.nochim <- readRDS("seqtab.nochim.RDS")
+seqtab.nochim <- readRDS("../Coral-Reefs/seqtab.nochim.RDS")
 
 # Track reads through pipeline ####
 getN <- function(x) sum(getUniques(x))
@@ -104,19 +105,21 @@ colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "n
 rownames(track) <- sample.names
 head(track)
 # Export results
-write.csv(track, file = "tracked_reads.csv", quote = FALSE)
-track <- read.csv("tracked_reads.csv")
+write.csv(track, file = "../Coral-Reefs/tracked_reads.csv", quote = FALSE)
+track <- read.csv("../Coral-Reefs/tracked_reads.csv")
+
 plot(track$nonchim)
+
 # remove all ASVs that don't have at least 2 hits ####
 seqtab.nochim <- seqtab.nochim[,(colSums(seqtab.nochim) > 1)]
 
 # Assign taxonomy - Silva v132 exact match / 80% bootstrap min ####
-taxa <- assignTaxonomy(seqtab.nochim,"../../silva_nr_v132_train_set.fa.gz",multithread = TRUE)
+taxa <- assignTaxonomy(seqtab.nochim,"../Chagos_Data/silva_nr_v132_train_set.fa.gz",multithread = TRUE)
 
 
 # More Species addition steps for 16S
-taxa <- addSpecies(taxa, "../../silva_species_assignment_v132.fa.gz")
-saveRDS(taxa,"taxa.RDS")
+#taxa <- addSpecies(taxa, "../../silva_species_assignment_v132.fa.gz")
+saveRDS(taxa,"../Coral-Reefs/taxa.RDS")
 
 
 # Inspect taxonomic assignments 
@@ -126,6 +129,7 @@ head(taxa.print)
 
 # re-load point for taxonomy ####
 taxa <- readRDS("taxa.RDS")
+
 
 
 # rename seqtab object samples
