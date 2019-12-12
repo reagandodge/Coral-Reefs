@@ -334,8 +334,6 @@ salinity     0.01131    0.01551   0.729    0.468
 Residual deviance: 2.1880  on 79  degrees of freedom
   (12 observations deleted due to missingness)
 AIC: -56.662
-
-Number of Fisher Scoring iterations: 2
 ```
 
 ------
@@ -349,9 +347,27 @@ plot_bar(ps, fill = "Phylum") + facet_wrap(~Island) + theme(legend.position="bot
 knitr::include_graphics("ugly_bar_plot.png")
 ```
 
-This is hideous. We know. Now lets try different variables and have a look at those using shannon and simpson diversity
+This is hideous. We know.
 
-### **Richness**
+The following code will give us a 3-dimensional representation of the first three axes of a Principal Coordinates Analysis (PCoA[2]) performed on the unweighted-UniFrac distance using all of the available sequences including both 5’ and 3’ sequences. 
+```{r, eval=FALSE, echo=TRUE}
+ps.ord    <- ordinate(ps)
+plot_ordination(ps, ps.ord, color="Island")
+psUF <- UniFrac(ps)
+
+ps.pcoa <- pcoa(psUF)
+```
+We can view this graphically with a “scree plot”, an ordered barplot of the
+relative fraction of the total eigenvalues associated with each axis.
+
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("PCOA.png")
+```
+
+
+Now lets try different variables and have a look at those using shannon and simpson diversity. 
+
+### **Richness and Alpha Diversity**
 
 By site
 ```{r echo=FALSE, out.width = '100%'}
@@ -371,6 +387,57 @@ knitr::include_graphics("plot_richness_depth.jpeg")
 By TempRange
 ```{r echo=FALSE, out.width = '100%'}
 knitr::include_graphics("plot_richness_temprange.jpeg")
+```
+
+
+------
+
+We wanted to move towards making a phylogenetic tree. As the code is long and tedious it won't be included. 
+Below is the image. 
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("phylotree.png")
+```
+
+This is also gross. So we are going to look into different variables by abundance and phylum groups.
+
+By Bacteroidetes
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("GenGlomBacteroidetes.png")
+```
+
+By Proteobacteria
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("GenGlomProteobacteria.png")
+```
+
+By Cyanobacteria 
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("GenGlomCyanobacteria.png")
+```
+
+
+By Firmicutes
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("GenGlomFirmicutes.png")
+```
+
+
+By Epsilonbacteraeota
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("GenGlomEpsilonbacteraeota.png")
+```
+
+By Actinobacteria
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("GeneGlomActinobacteria.png")
+```
+
+Both Peros and Salomon islands seems to contain the highest abundance of life among the community structures overall. 
+
+**And now some bar plots **
+
+```{r echo=FALSE, out.width = '100%'}
+knitr::include_graphics("bar_plot_bacteroidetes_abundance.png")
 ```
 
 
